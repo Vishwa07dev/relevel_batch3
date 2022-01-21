@@ -1,6 +1,6 @@
 
 "use strict" ; // This will ensure that a variable is dec
-abc=5 ;
+
 class Circle {
     static shape = "Circle";
     radius  ;
