@@ -39,13 +39,60 @@ exports.create = (req, res)=>{
  * Handler for getting all the categories
  */
 exports.findAll = (req, res) =>{
-        Category.findAll().then(categories =>{
+
+    // localhost:8080/ecomm/api/v1/categories/?name="electronics"  -- Query parama
+
+
+    /**
+     * 
+     * Path Param :   /ecomm/api/v1/categories/123   123 path parama
+     * 
+     * Query Param : /ecomm/api/v1/categories?name=Vishwa  Query param - cosidered to be optional
+     * 
+     * 
+     */
+
+    /**
+     * I need to interecpt the query params and use it   : ?name=Vishwa
+     */ 
+
+        const categoryName = req.query.name ;  // will get Vishwa stored in categoryName
+
+        /**
+         * If I get a query param , which is name, I should apply the name filter
+         * else, no filter
+         */
+
+         
+        let promise ;
+        if(categoryName){
+          promise = Category.findAll({
+                where : {
+                    name : categoryName
+                }
+            })
+        }else{
+          promise =   Category.findAll()
+        }
+
+        promise.then(categories =>{
             res.status(200).send(categories);
         }).catch(err =>{
             res.status(500).send({
                 message :  "Some internal error happened"
             })
         })
+
+        
+       /** 
+        Category.findAll().then(categories =>{
+            res.status(200).send(categories);
+        }).catch(err =>{
+            res.status(500).send({
+                message :  "Some internal error happened"
+            })
+        })**/
+
 }
 
 /**
@@ -58,7 +105,77 @@ exports.findOne = (req,res)=>{
     const categoryId = req.params.id;
 
     Category.findByPk(categoryId).then(categoryId =>{
-        res.status(201).send(categoryId);
+        res.status(200).send(categoryId);
+    }).catch(err=>{
+        res.status(500).send({
+            message :  "Some internal error happened"
+        })
+    })
+}
+
+/**
+ * 
+ * Provide support for updating the category
+ * 
+ * PUT 127.0.0.1:8080/ecomm/api/v1/categories/123
+ * 
+ * JSON Body
+ *  */ 
+exports.update = (req, res)=>{
+    /**
+     * I need to parse the request body, just like POST
+     */
+     const category = {
+        name : req.body.name,
+        description : req.body.description
+    }
+    /**
+     * I need to know which Category has to be updated
+     */
+    const categoryId = req.params.id;
+
+    /**
+     * It's time to update the Category
+     */
+
+    Category.update(category,{
+        where : {id : categoryId},
+        returning : true
+    }).then(updatedCategory =>{
+        console.log(updatedCategory);
+        /**
+         * I need to return the updated category
+         */
+        Category.findByPk(categoryId).then(categoryRes =>{
+            res.status(200).send(categoryRes);
+        }).catch(err => {
+            res.status(500).send({
+                message :  "Some internal error happened"
+            })
+        })
+        
+    }).catch(err =>{
+        res.status(500).send({
+            message :  "Some internal error happened"
+        })
+    })
+}
+
+/**
+ * Deleting the category
+ */
+
+exports.delete = (req, res)=>{
+    const categoryId = req.params.id;
+
+    Category.destroy({
+        where : {
+            id : categoryId
+        }
+    }).then(result =>{
+        res.status(200).send({
+            message : "Successfully deleted the message"
+        })
     }).catch(err=>{
         res.status(500).send({
             message :  "Some internal error happened"

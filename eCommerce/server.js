@@ -32,6 +32,7 @@ db.sequelize.sync({force:true}).then(()=>{
 
 //Initialize the routes
 require('./routes/category.route')(app);
+require('./routes/product.route')(app);
 
 app.listen(serverConfig.PORT,()=>{
     console.log("Application started on port no :",serverConfig.PORT );
