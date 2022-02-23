@@ -4,13 +4,32 @@
  */
 
 const controller = require('../controllers/category.controller');
+const  {requestValidator}  = require("../middlewares");
+
+/**
+ * 
+ * 
+ * module.exports ={
+    requestValidator
+  }  
+ * const  requestValidator  = require("../middlewares");
+ * 
+ * requestValidator represent the whole obeject  {
+    requestValidator
+  }  
+ * 
+ * { requestValidator } = require("../middlewares");
+ * 
+ * requestValidator is representing requestValidator the key of the objec
+ * 
+ */
 
 
 module.exports = function(app){
 
 
     //Route for creating a new category
-    app.post('/ecomm/api/v1/categories', controller.create);
+    app.post('/ecomm/api/v1/categories',[requestValidator.validateCategoryRequest], controller.create);
 
     //Route for getting all the categories
     app.get('/ecomm/api/v1/categories', controller.findAll);
@@ -19,7 +38,7 @@ module.exports = function(app){
     app.get('/ecomm/api/v1/categories/:id', controller.findOne);
 
     //Route for updating the category
-    app.put('/ecomm/api/v1/categories/:id', controller.update);
+    app.put('/ecomm/api/v1/categories/:id',[requestValidator.validateCategoryRequest], controller.update);
 
     //Route for deleting the category
     app.delete('/ecomm/api/v1/categories/:id', controller.delete);
