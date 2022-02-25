@@ -39,5 +39,27 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.category = require('./category.model')( sequelize, Sequelize);
 db.product = require('./product.model')( sequelize, Sequelize);
+db.user = require('./user.model')( sequelize, Sequelize);
+db.role = require('./role.model')( sequelize, Sequelize);
+
+
+/**
+ * Many to Many relationships
+ */
+db.role.belongsToMany(db.user, {
+   through : "user_roles",
+   foreignKey : "role_id",
+   otherKey : "user_id"
+
+});
+
+db.user.belongsToMany(db.role, {
+    through : "user_roles",
+    foreignKey : "user_id",
+    otherKey : "role_id"
+})
+
+
+
 
 module.exports = db;

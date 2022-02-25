@@ -6,6 +6,13 @@ const { category } = require("../models");
 
 /**
  * 
+ * const xyz = require("../models");
+ * 
+ * Category = xyz.category
+ */
+
+/**
+ * 
  * const db =  require("../models"); 
  * 
  * category = db.category
