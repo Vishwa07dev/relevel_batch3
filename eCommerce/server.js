@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 const db = require("./models");
 const Category = db.category;
 const Product  = db.product;
+const Role = db.role;
 
 console.log(typeof(Category));
 
@@ -28,7 +29,7 @@ Category.hasMany(Product);  // 1 to M relationship
  */
 db.sequelize.sync({force:true}).then(()=>{
     console.log("table dropped and recreated");
-    Kareena();
+    init();
 }).catch(err=>{
     console.log(err.message);
 })
@@ -37,7 +38,7 @@ db.sequelize.sync({force:true}).then(()=>{
 /**
  * This function should be executed at the begining of the app startup
  */
-function Kareena(){
+function init(){
 
     /**
      * create some initial categories
@@ -57,8 +58,22 @@ function Kareena(){
     Category.bulkCreate(categories).then(()=>{
         console.log('categories are added');
     }).catch(err =>{
-        console.log("Error in initializing the categories", e.message);
+        console.log("Error in initializing the categories", err.message);
     })
+
+    /**
+     * Create the roles
+     */
+
+    Role.create({
+        id:1,
+        name : "customer"
+    });
+
+    Role.create({
+        id:2,
+        name : "admin"
+    });
 
 
 }
@@ -70,6 +85,8 @@ function Kareena(){
 //Initialize the routes
 require('./routes/category.route')(app);
 require('./routes/product.route')(app);
+require('./routes/auth.route')(app);
+
 
 app.listen(serverConfig.PORT,()=>{
     console.log("Application started on port no :",serverConfig.PORT );
