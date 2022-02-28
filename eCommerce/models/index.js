@@ -10,6 +10,9 @@ const Sequelize = require('sequelize');
 const config = require('../configs/db.config');
 
 
+//console.log(Sequelize);
+
+
 /**
  * creating the db connection
  */
