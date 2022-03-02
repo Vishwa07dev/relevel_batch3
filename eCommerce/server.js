@@ -86,6 +86,7 @@ function init(){
 require('./routes/category.route')(app);
 require('./routes/product.route')(app);
 require('./routes/auth.route')(app);
+require('./routes/cart.route')(app);
 
 
 app.listen(serverConfig.PORT,()=>{

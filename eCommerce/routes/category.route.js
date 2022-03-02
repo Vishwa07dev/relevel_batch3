@@ -4,7 +4,7 @@
  */
 
 const controller = require('../controllers/category.controller');
-const  {requestValidator}  = require("../middlewares");
+const  {requestValidator, authJwt}  = require("../middlewares");
 
 /**
  * 
@@ -29,7 +29,7 @@ module.exports = function(app){
 
 
     //Route for creating a new category
-    app.post('/ecomm/api/v1/categories',[requestValidator.validateCategoryRequest], controller.create);
+    app.post('/ecomm/api/v1/categories',[authJwt.verifyToken,authJwt.isAdmin, requestValidator.validateCategoryRequest], controller.create);
 
     //Route for getting all the categories
     app.get('/ecomm/api/v1/categories', controller.findAll);
@@ -38,9 +38,9 @@ module.exports = function(app){
     app.get('/ecomm/api/v1/categories/:id', controller.findOne);
 
     //Route for updating the category
-    app.put('/ecomm/api/v1/categories/:id',[requestValidator.validateCategoryRequest], controller.update);
+    app.put('/ecomm/api/v1/categories/:id',[authJwt.verifyToken,authJwt.isAdmin,requestValidator.validateCategoryRequest], controller.update);
 
     //Route for deleting the category
-    app.delete('/ecomm/api/v1/categories/:id', controller.delete);
+    app.delete('/ecomm/api/v1/categories/:id',[authJwt.verifyToken,authJwt.isAdmin], controller.delete);
     //Route for getting the category based on the name - filter the result based on the name
 }
