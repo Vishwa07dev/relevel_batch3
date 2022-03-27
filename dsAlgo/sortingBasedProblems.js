@@ -69,7 +69,7 @@ function tripletsSum(arr) {
     for (i = 0; i < arr.length; i++) {
         temp[i] = arr[i];
     }
-    arr.sort((a, b) => a - b);
+    temp.sort((a, b) => a - b);
 
     var index = 0;
     let map = new Map();
@@ -84,9 +84,11 @@ function tripletsSum(arr) {
 }
 
 
-var testArr = [1,2,5,10,3,4];
+//var testArr = [1,2,5,10,3,4];
 
-console.log("before", testArr);
-reduceArra(testArr);
-console.log("after", testArr);
+var testArr2 = [10,6,8,7,11,5];
+
+console.log("before", testArr2);
+reduceArra(testArr2);
+console.log("after", testArr2);
 
