@@ -59,22 +59,6 @@ exports.signup = (req, res) => {
 
             })
         } else {
-           /**
-            //One option is that I fetch the Role object by running the query
-            Role.findOne({
-                where : {
-                    age : 19
-                }
-            }).then(role => {
-                User.setRoles([role]).then(() => {
-                    console.log("registration completed");
-                    res.status(201).send({
-                        message: "User successfully registed"
-                    })
-                })
-            })
-
-            **/
            user.setRoles([1]).then(()=>{
             console.log("registration completed");
             res.status(201).send({

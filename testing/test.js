@@ -149,7 +149,7 @@ function exceptionThrower(){
 }
 
 test("Testing exception", ()=>{
-    expect(()=> exceptionThrower()).toThrow();
+    expect(()=>exceptionThrower()).toThrow();
     expect(()=> exceptionThrower()).toThrow(Error);
     expect(()=> exceptionThrower()).toThrow(Error("Exception, is what you have been looking for"));
 
