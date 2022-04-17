@@ -4,7 +4,7 @@
   "description": "This is going to be the backend codebase of eCommerce App",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Vishwa Mohan",
   "license": "ISC",
